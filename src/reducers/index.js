@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 import paginate from './paginate'
 import merge from 'lodash/merge'
 import qs from 'qs'
+import { reducer as formReducer } from 'redux-form'
 
 // I looooove the internet: https://stackoverflow.com/questions/18017869/build-tree-array-from-flat-array-in-javascript
 function list_to_tree(list) {
@@ -50,9 +51,20 @@ export const getSearchResultsForQuery = (state, query) => {
 	}
 }
 
+export const getCategoryFromState = (state, catId) => {
+	return state.entities.categories[catId]
+}
+
 const entities = (state={posts: {}, categories: {}}, action) => {
 	if (action.payload && action.payload.entities) {
 		return merge({}, state, action.payload.entities)
+	}
+	return state
+}
+
+const ui = (state={currentSearch: undefined}, action) => {
+	if (action.type === ActionTypes.SEARCH_SUCCESS) {
+		return merge({}, state, {currentSearch: merge({}, action.meta.query)})
 	}
 	return state
 }
@@ -74,5 +86,7 @@ const pagination = combineReducers({
 
 export default combineReducers({
 	entities,
-	pagination
+	pagination,
+	ui,
+	form: formReducer
 })

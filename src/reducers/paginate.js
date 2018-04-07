@@ -17,13 +17,16 @@ const paginate = ({types, mapActionToKey}) => {
 					isFetching: true
 				}
 			case successType:
+				const {count, result, next, previous, ...rest} = action.payload
 				return {
 					...state,
+					...rest,
 					isFetching: false,
-					total: action.payload.count,
-					ids: union(state.ids, action.payload.result),
-					next: action.payload.next,
-					previous: action.payload.previous
+					total: count,
+					ids: union(state.ids,result),
+					next: next,
+					previous: previous
+
 				}
 			case failureType:
 				return {

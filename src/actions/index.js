@@ -72,7 +72,7 @@ export const getCategory = (category = 'sss', fieldsNeeded = ['name', 'short_nam
 		endpoint: `${apiEndpoint}/api/categories/${category}/?${qs.stringify({ fields: fieldsNeeded}, { indices: false })}`,
 		method: 'GET',
 		types: [
-			GET_CATEGORY_SUCCESS,
+			GET_CATEGORY_REQUEST,
 			{
 				type: GET_CATEGORY_SUCCESS,
 				payload: parseResponse(Schemas.CATEGORY)

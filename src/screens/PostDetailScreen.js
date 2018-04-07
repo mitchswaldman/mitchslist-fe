@@ -27,8 +27,8 @@ class PostDetailScreen extends React.Component {
 					const key = Object.keys(attribute.data)[0]
 					return (
 						<div key={`attribute_${post.id}_${key}`}>
-							<label>key</label>
-							<p>{attribute.data[key]}</p>
+							<label><span>{key}</span> {attribute.data[key]}
+							</label>
 						</div>
 					)
 				})}
@@ -45,4 +45,4 @@ const mapDispatchToProps = (dispatch) => ({
 	getPost: (id) => dispatch(getPost(id))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostDetailScreen)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetailScreen))

@@ -4,8 +4,10 @@ import { withRouter } from 'react-router-dom'
 import { search } from '../actions'
 import { getSearchResultsForQuery } from '../reducers'
 import SearchBoxContainer from '../containers/SearchBoxContainer'
+import SearchSidebarContainer from '../containers/SearchSidebarContainer'
 import PostList from '../components/PostList'
 import Header from '../components/Header'
+import Paginator from '../components/Paginator'
 import qs from 'qs'
 
 class SearchScreen extends React.Component {
@@ -27,22 +29,23 @@ class SearchScreen extends React.Component {
 	componentWillReceiveProps({location: nextLocation, history}) {
 		const { location : { search } } = this.props
 		const query = this.checkForCategory(nextLocation, history)
-		if ( query != qs.parse(search, {ignoreQueryPrefix: true}) ) {
+		if ( nextLocation.search !== search) {
 			this.props.search(query)
 		}
 	}
 
 	render() {
 		const { searchResults = {}, location: { search } } = this.props
-		const { posts = [], category_counts = {}, next, previous, count } = searchResults
+		const { posts = [], category_counts = {}, next, previous, total = 0 } = searchResults
 		const query = qs.parse(search, { ignoreQueryPrefix: true }) || {}
 		return (
 			<React.Fragment>
 				<Header/>
 				<div> Search Screen </div>
 				<SearchBoxContainer/>
+				<Paginator total={total} count={posts.length} next={next} previous={previous} offset={Number(query.offset) || 0}/>
 				<PostList posts={posts}/>
-				<SearchSidebarContainer categoryCounts={category_counts} cat={query.cat || 'sss'}/>
+				<SearchSidebarContainer categoryCounts={category_counts} categoryId={query.cat || 'sss'}/>
 			</React.Fragment>
 		)
 	}
