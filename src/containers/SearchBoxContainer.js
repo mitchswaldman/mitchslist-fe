@@ -1,6 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { search } from '../actions'
+import { reduxForm, isDirty, Field, change, submit } from 'redux-form'
+import { withRouter } from 'react-router-dom'
+import { categoryFilterFormName } from '../constants'
+import qs from 'qs'
 
 class SearchBoxContainer extends React.Component {
 	constructor(props) {
@@ -8,41 +12,39 @@ class SearchBoxContainer extends React.Component {
 		this.state = {
 			text: ""
 		}
-		this.handleChange = this.handleChange.bind(this)
-		this.handleSubmit = this.handleSubmit.bind(this)
+		this.onSubmit = this.onSubmit.bind(this)
 	}
 
-	handleChange = (event) => {
-	    const target = event.target;
-	    const value = target.type === 'checkbox' ? target.checked : target.value;
-	    const name = target.name;
-
-	    this.setState({
-	      [name]: value
-	    });
-	}
-
-	handleSubmit = (event) => {
-		event.preventDefault()
-		this.props.search(this.state.text)
+	onSubmit = (values) => {
+		this.props.dispatch(submit(categoryFilterFormName))
 	}
 
 	render() {
+		const { dirty, categoryFormDirty, handleSubmit} = this.props 
 		return (
-			<form onSubmit={this.handleSubmit}>
-				<input type="text" name="text" value={this.state.text} onChange={this.handleChange}/>
-				<input type="submit" value="Submit"/>
+			<form onSubmit={handleSubmit}>
+				<Field name="text" component="input" type="text"/>
+				<button type="submit" className={`search-btn ${(dirty || categoryFormDirty) ? 'dirty' : ''}`}>Search</button>
 			</form>
 		)
 	}
 }
 
-const mapStateToProps = (state) => ({
-	pagination: state.pagination || {}
-})
+const onChange = (values, dispatch, props, previousValue) => {
+	dispatch(change(categoryFilterFormName, 'text', values['text']))
+}
 
-const mapDispatchToProps = (dispatch) => ({
-	search: (text) => dispatch(search({text}))
+const onSubmit = (values, dispatch, props) => {
+	return dispatch(submit(categoryFilterFormName))
+}
+const mapStateToProps = (state, { location: { search }}) => ({
+	initialValues: {
+		text: qs.parse(search, { ignoreQueryPrefix: true }).text || ""
+	},
+	categoryFormDirty: isDirty(categoryFilterFormName)(state)
 })
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBoxContainer)
+export default withRouter(connect(mapStateToProps)(reduxForm({
+	form: 'searchForm',
+	onChange,
+	onSubmit
+})(SearchBoxContainer)))

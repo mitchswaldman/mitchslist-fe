@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { reduxForm, Field, getFormValues, initialize } from 'redux-form'
-import { pushSearchQuery } from '../helpers'
+import { pushSearchQuery, convertObjectKeysToArrays, convertObjectArraysToKeys } from '../helpers'
+import { categoryFilterFormName } from '../constants'
 import merge from 'lodash/merge'
 import keys from 'lodash/keys'
 import pickBy from 'lodash/pickBy'
@@ -24,10 +25,10 @@ const renderAttribute = (attribute) => {
 		return (
 			<React.Fragment>
 				<label aria-label={name}> {name} </label>
-				{values.map(value => (
+				{values.map((value, idx) => (
 					<React.Fragment key={value}>
 						<label> {value} </label>
-						<Field key={value} name={`${name.toLowerCase()}`} component='input' type='checkbox' />
+						<Field key={value} name={`${name.toLowerCase()}.${value}`} component='input' type='checkbox' />
 					</React.Fragment>
 				))}
 			</React.Fragment>
@@ -42,18 +43,6 @@ const renderAttribute = (attribute) => {
 class CategoryFilterForm extends React.Component {
 	constructor(props) {
 		super(props)
-		this.onSubmit = this.onSubmit.bind(this)
-	}
-
-	onSubmit = (values) => {
-		const { initialValues, history, fields } = this.props 
-		const fieldNames = keys(fields)
-		const pickedInitalValues = pickBy(initialValues, (value, key) => fieldNames.indexOf(key) > -1)
-		const mergedValues = merge({}, pickedInitalValues, values)
-		const formKeys = keys(values).filter(key => fieldNames.indexOf(key) > -1)
-		const formQuery = pickBy(mergedValues, (value, key) => formKeys.indexOf(key) > -1)
-		const unknownQueryParams = pickBy(initialValues, (value, key) => fieldNames.indexOf(key) < 0)
-		history.push(`/search?${qs.stringify(merge({}, unknownQueryParams, formQuery))}`)
 	}
 
 	render() {
@@ -62,7 +51,7 @@ class CategoryFilterForm extends React.Component {
 			return null
 		}
 		return (
-			<form onSubmit={handleSubmit(this.onSubmit)}>
+			<form onSubmit={handleSubmit}>
 				{attributes.map(attribute => {
 					return (
 						<div key={attribute.name} className='attribute-filter-container'>
@@ -70,6 +59,7 @@ class CategoryFilterForm extends React.Component {
 						</div>
 					)
 				})}
+				<Field name="text" type="hidden" component="input"/>
 				<button type='submit' className={pristine ? 'pristine' : 'dirty'}> Search </button>
 			</form>
 		)
@@ -80,11 +70,17 @@ CategoryFilterForm.propTypes = {
 	attributes: PropTypes.array.isRequired
 }
 
+const onSubmit = (values, dispatch, props) => {
+	const { initialValues, history, fields } = props 
+	let newQuery = pushSearchQuery(initialValues, values)
+	history.push(`/search?${qs.stringify(newQuery, { encode: false })}`)
+}
+
 const mapStateToProps = (state, { location: { search }}) => {
-	const query = qs.parse(search, { ignoreQueryPrefix: true })
+	const query = qs.parse(search, { ignoreQueryPrefix: true})
 	return {
 		initialValues: query,
-		fields: state.form['categoryFilterForm'] && state.form['categoryFilterForm'].registeredFields || {}
+		fields: state.form[categoryFilterFormName] && state.form[categoryFilterFormName].registeredFields || {}
 	}
 }
 
@@ -92,6 +88,7 @@ const mapDispatchtoProps = (dispatch) => ({
 	initialize: (form, data) => dispatch(initialize(form, data))
 })
 export default withRouter(connect(mapStateToProps)(reduxForm({
-	form: 'categoryFilterForm',
-	enableReinitialize: true
+	form: categoryFilterFormName,
+	enableReinitialize: true,
+	onSubmit
 })(CategoryFilterForm)))

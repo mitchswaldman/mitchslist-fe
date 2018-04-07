@@ -50,6 +50,39 @@ export const pushSearchQuery = (currentQuery = {}, newQueryParams = {}, options 
 			newQuery = pick(newQuery, xor(allKeys, options.removeFields))
 		}
 	}
-
+	// prune null, undefined, and empty string values from search query
+	newQuery = pickBy(newQuery, (value, key) => {
+		return value !== null && typeof value !== 'undefined' && value !== ""
+	})
+	console.log(newQuery)
 	return newQuery
+}
+
+export const convertObjectKeysToArrays = (obj) => {
+	let object = merge({}, obj)
+	keys(object).forEach(key => {
+		const val = object[key]
+		if (typeof val === 'object') {
+			//turn keys into values in an array if val[key] is truthy
+			const values = keys(val).filter(key => val[key])
+			// merge into object
+			object = merge({}, object, {[key]: values})
+		}
+	})
+	return object
+}
+
+export const convertObjectArraysToKeys = (obj) => {
+	let object = merge({}, obj)
+	keys(object).forEach(key => {
+		const val = object[key]
+		if (Array.isArray(val)) {
+			let mergedArrayKeys = {}
+			val.forEach(value => {
+				mergedArrayKeys = merge({}, {value: true})
+			})
+			object[key] = mergedArrayKeys
+		}
+	})
+	return object
 }
