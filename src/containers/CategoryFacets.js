@@ -52,7 +52,7 @@ const mapStateToProps = (state, { location: { search }}) => {
 	}
 }
 
-const onChange = (values, dispatch, props) => {
+const onChange = (values, dispatch, props, prevValues) => {
 	dispatch(change(categoryFilterFormName, 'ex_cats', values['ex_cats']))
 }
 

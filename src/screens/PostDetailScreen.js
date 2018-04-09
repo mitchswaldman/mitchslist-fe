@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { getPost } from '../actions'
 import Header from '../components/Header'
+import PostDetail from '../components/PostDetail'
+import './PostDetailScreen.css'
 
 class PostDetailScreen extends React.Component {	
 	componentDidMount() {
@@ -17,21 +19,8 @@ class PostDetailScreen extends React.Component {
 		}
 		return (
 			<div>
-				<Header/>
-				<h1> {post.title} </h1>
-				{post.photos.map(img => (
-					<img key={img.image} src={img.image}/>
-				))}
-				<p> {post.detail} </p>
-				{post.attributes.map(attribute => {
-					const key = Object.keys(attribute.data)[0]
-					return (
-						<div key={`attribute_${post.id}_${key}`}>
-							<label><span>{key}</span> {attribute.data[key]}
-							</label>
-						</div>
-					)
-				})}
+				<Header />
+				<PostDetail post={post}/>
 			</div>
 		)
 	}

@@ -45,7 +45,7 @@ input.flatinput {
   to { transform: rotate(360deg); }
 }
 
-button.dirty {
+.dirty {
   background-color: yellow;
 }
 
@@ -66,4 +66,16 @@ ul.postlks {
 .linklike {
   color: #00E;
   cursor: pointer;
+}
+
+#reset-this-parent {
+  all: initial;
+  * {
+    all: unset;
+  }
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }

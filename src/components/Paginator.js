@@ -14,8 +14,11 @@ const Paginator = ({total, count, offset = 0, next, previous}) => {
 			<span className="buttons">
 				{prevUrl && <span className="prev"><Link to={`/search?${qs.stringify(query)}`}>&#60;&#60;</Link></span>}
 				{prevUrl && <span className="prev"><Link to={`/search${prevUrl}`}>&#60; prev</Link></span>}
+				{!prevUrl && <span className="prev disabled">&#60;&#60;</span>}
+				{!prevUrl && <span className="prev disabled">&#60; prev</span>}
 				<span className="range">{offset + 1} - {offset + count} / {total}</span>
 				{nextUrl && <span className="next"><Link to={`/search${nextUrl}`}>next &#62;</Link></span>}
+				{!nextUrl && <span className="next disabled">next &#62;</span>}
 			</span>
 		</div>
 	)

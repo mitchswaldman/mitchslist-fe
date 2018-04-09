@@ -15,16 +15,17 @@ export default class PostList extends React.Component {
 		const { posts, categoryId} = this.props
 
 		return (
-			<ul class="row">
+			<ul className="row">
 				{posts.map(post => (
 					<li key={post.id} className="result-row">
 						<p className="result-info">
-							<time class="result-date">{moment(post.create_date).format('MMM D')}</time>
+							<time className="result-date">{moment(post.create_date).format('MMM D')}</time>
 							<Link to={`/post/${post.id}`} className="result-title">{post.title}</Link>
 							{post.attributes.map(attribute => {
 								const key = Object.keys(attribute.data)[0]
-								return <span className={`attribute ${key}`}> {attribute.data[key]} </span>
+								return <span key={`${key}_${attribute.data[key]}`} className={`attribute ${key}`}> {attribute.data[key]} </span>
 							})}
+							{post.photos && post.photos.length > 0 && <span className="has-pic"> pic </span>}
 						</p>
 					</li>
 				))}

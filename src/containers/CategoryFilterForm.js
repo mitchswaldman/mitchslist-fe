@@ -47,7 +47,7 @@ class CategoryFilterForm extends React.Component {
 	}
 
 	render() {
-		const { attributes = [], pristine, handleSubmit, history, location: { search }} = this.props
+		const { attributes = [], dirty, handleSubmit, history, location: { search }} = this.props
 		if (attributes.length === 0 ) {
 			return null
 		}
@@ -63,7 +63,7 @@ class CategoryFilterForm extends React.Component {
 				<Field name="text" type="hidden" component="input"/>
 				<div className="searchgroup resetsearch">
 					<a onClick={this.reset} className="reset">reset</a>
-					<button type='submit' className={`searchlink linklike ${pristine ? 'pristine' : 'dirty'}`}> Search </button>
+					<button type='submit' className={`searchlink linklike ${dirty ? 'dirty' : ''}`}> Search </button>
 				</div>
 			</form>
 		)
@@ -82,6 +82,9 @@ const onSubmit = (values, dispatch, props) => {
 
 const mapStateToProps = (state, { location: { search }}) => {
 	const query = qs.parse(search, { ignoreQueryPrefix: true})
+	if (query.ex_cats && !Array.isArray(query.ex_cats)) {
+		query.ex_cats = [query.ex_cats]
+	}
 	return {
 		initialValues: query,
 		fields: state.form[categoryFilterFormName] && state.form[categoryFilterFormName].registeredFields || {}

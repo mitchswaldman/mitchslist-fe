@@ -1,0 +1,112 @@
+.reply-button {
+	text-transform: lowercase;
+    padding: 0 8px 0 8px;
+    background: #ffff44;
+    border: solid #ffd700 1px;
+    border-radius: .25em;
+    height: 25px;
+    line-height: 12px;
+}
+
+.reply-button a {
+	color: black;
+}
+
+.posting-title {
+	font-family: "Bitstream Vera Serif","Times New Roman",serif;
+    font-size: 2em;
+    font-weight: bold;
+    margin: 10px 0;
+    clear: left;
+}
+
+.post-body {
+	font-family: "Bitstream Vera Serif","Times New Roman",serif;
+	font-size: 1.3em;
+}
+
+.iw {
+    margin-bottom: 1em;
+    width: 100%;
+    max-width: 442px;
+    vertical-align: top;
+    position: relative;
+}
+
+@media only screen and (min-width: 1024px){
+.iw {
+    max-width: 602px;
+}}
+
+.gallery {
+    position: relative;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: auto;
+    margin: 0 -9px;
+}
+
+@media only screen and (min-width: 480px){
+.gallery {
+    margin: 0;
+}}
+
+.swipe {
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+.slide {
+    width: 440px;
+    height: 330px;
+}
+
+@media only screen and (min-width: 1024px){
+.iw.multiimage .carousel, .iw.multiimage .slide {
+    width: 600px;
+    height: 450px;
+}}
+.iw .swipe {
+    cursor: zoom-in;
+    max-width: 600px;
+    max-height: 450px;
+}
+
+.swipe .swipe-wrap {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.iw #thumbs a {
+    text-decoration: none;
+    display: inline-block;
+    line-height: 0;
+}
+
+.iw #thumbs img {
+    height: 40px;
+    width: 40px;
+    border: solid 1px transparent;
+}
+
+@media only screen and (min-width: 1024px){
+.iw #thumbs img {
+    height: 48px;
+    width: 48px;
+}}
+
+.iw #thumbs img.selected {
+    border: solid 1px orange;
+    -webkit-box-shadow: 0 0 0 1px orange;
+    -moz-box-shadow: 0 0 0 1px orange;
+    box-shadow: 0 0 0 1px orange;
+}
+
+.iw #thumbs:before, .iw #thumbs:after {
+    content: " ";
+    display: table;
+    visibility: hidden;
+}

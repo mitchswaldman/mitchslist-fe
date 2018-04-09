@@ -1,0 +1,12 @@
+.post-container {
+    padding: .5em 9px 6em 9px;
+    margin: 0 auto;
+    height: 90%;
+    min-height: 600px;
+}
+
+@media only screen and (min-width: 1024px){
+	.post-container {
+	    max-width: 61.25em;
+	}
+}

@@ -10,7 +10,6 @@
     -moz-box-shadow: 1px 2px 4px -1px #999;
     box-shadow: 1px 2px 4px -1px #999;
     background-color: #eee;
-    display: none;
     margin-top: -0.5em;
     padding: 0 1em .1em;
     position: relative;
@@ -18,12 +17,6 @@
 }
 
 @media only screen and (min-width: 840px) {
-    .search-options {
-        padding-bottom: 10em;
-    }
-}
-
-@media only screen and (min-width: 480px) {
     .search-options {
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
@@ -36,3 +29,10 @@
         width: 100%;
     }
 }
+
+@media only screen and (min-width: 840px) {
+    .search-options {
+        padding-bottom: 10em;
+    }
+}
+

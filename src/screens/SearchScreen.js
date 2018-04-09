@@ -26,6 +26,7 @@ class SearchScreen extends React.Component {
 		this.setState({showSidebar: !this.state.showSidebar})
 	}
 
+
 	componentDidMount() {
 		const { location, history, search } = this.props
 		const query = this.checkForCategory(location, history)
@@ -49,8 +50,12 @@ class SearchScreen extends React.Component {
 			<div id="search-screen-wrapper">
 				<Header/>
 				<div id="search-content" className={`${showSidebar ? '' : 'collapsed'}`}>
+					<h4></h4>
 					<div className="querybox">
 						<SearchBoxContainer onClick={this.handleClick} collapsed={!showSidebar}/>
+						<div className="options-reveal">
+							<button className="reveal-button" onClick={this.handleClick}> {showSidebar ? 'options' : 'close'} </button>
+						</div>
 					</div>
 					<div className="search-legend">
 						<Paginator total={total} count={posts.length} next={next} previous={previous} offset={Number(query.offset) || 0}/>

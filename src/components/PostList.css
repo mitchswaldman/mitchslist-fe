@@ -1,3 +1,7 @@
+ul.row {
+	padding: 0.5em 0.5em;
+}
+
 .result-row .attribute {
 	display: none;
 	-webkit-border-radius: .25em;
@@ -21,4 +25,13 @@
 
 .result-row .attribute.price:before {
 	content: "$";
+}
+
+.result-row .result-title {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+.has-pic {
+	color: orange;
 }

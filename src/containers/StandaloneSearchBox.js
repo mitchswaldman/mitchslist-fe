@@ -38,7 +38,7 @@ class StandaloneSearchBox extends React.Component {
 const onSubmit = (values, dispatch, { history }) => {
 	const { text } = values
 	if (text) {
-		history.push(`/search?${qs.stringify(text)}`)
+		history.push(`/search?${qs.stringify({text})}`)
 	}
 }
 
