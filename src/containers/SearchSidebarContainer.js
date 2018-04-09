@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import FacetedLink from '../utils/FacetedLink'
 import { getCategory, getCategories } from '../actions'
 import { getCategoryFromState } from '../reducers'
-import CategoryFacets from '../components/CategoryFacets'
+import CategoryFacets from './CategoryFacets'
 import CategoryFilterForm from './CategoryFilterForm'
+import './SearchSidebarContainer.css'
 
 class SearchSidebarContainer extends React.Component {
 	componentDidMount() {
@@ -19,14 +21,18 @@ class SearchSidebarContainer extends React.Component {
 	}
 
 	render() {
-		const { category = {}, categoryCounts, categories } = this.props
+		const { category = {}, categoryCounts, categories, categoryId } = this.props
 		if (!category.attributes) {
 			return <div> Loading category... </div>
 		}
 		return (
-			<div>
-				<h2> {category.name} </h2>
-				<CategoryFacets categoryCounts={categoryCounts}/>
+			<div className="search-options">
+				<div className="searchgroup categories"> 
+					<div className="cattitle">
+						<FacetedLink query={{cat: categoryId}}> {category.name}  </FacetedLink>
+					</div>
+					<CategoryFacets categoryCounts={categoryCounts} currentCategoryId={categoryId}/>
+				</div>
 				<CategoryFilterForm attributes={category.attributes}/>
 			</div>
 		)
@@ -34,7 +40,7 @@ class SearchSidebarContainer extends React.Component {
 }
 
 SearchSidebarContainer.propTypes = {
-	categoryId: PropTypes.number.isRequired,
+	categoryId: PropTypes.string.isRequired,
 	categoryCounts: PropTypes.object.isRequired
 }
 

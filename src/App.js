@@ -9,11 +9,13 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <Switch>
-        <Route path="/post/:id" component={PostDetailScreen}/>
-        <Route path="/search" component={SearchScreen}/>
-        <Route path="/" component={HomeScreen}/>
-      </Switch>
+      <div className="app-wrapper">
+        <Switch>
+          <Route path="/post/:id" component={PostDetailScreen}/>
+          <Route path="/search" component={SearchScreen}/>
+          <Route path="/" component={HomeScreen}/>
+        </Switch>
+      </div>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import merge from 'lodash/merge'
 import qs from 'qs'
@@ -23,8 +23,8 @@ FacetedLink.propTypes = {
 	query: PropTypes.object.isRequired
 }
 
-const mapStatetoProps = (state) => ({
-	currentSearchQuery: state.ui.currentSearch
+const mapStatetoProps = (state, {location: { search }}) => ({
+	currentSearchQuery: qs.parse(search, { ignoreQueryPrefix: true })
 })
 
-export default connect(mapStatetoProps, {})(FacetedLink)
+export default withRouter(connect(mapStatetoProps, {})(FacetedLink))

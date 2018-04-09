@@ -1,6 +1,7 @@
 import { normalize } from 'normalizr'
 import { getJSON } from 'redux-api-middleware'
 import merge from 'lodash/merge'
+import mergeWith from 'lodash/mergeWith'
 import pickBy from  'lodash/pickBy'
 import pick from 'lodash/pick'
 import keys from 'lodash/keys'
@@ -38,7 +39,12 @@ export const parseResponse = (schema) => (action, state, response) => {
 }
 
 export const pushSearchQuery = (currentQuery = {}, newQueryParams = {}, options = {}) => {
-	let newQuery = merge({}, currentQuery, newQueryParams)
+	const customizer = (objValue, srcValue) => {
+		if (Array.isArray(srcValue)) {
+			return srcValue
+		}
+	}
+	let newQuery = mergeWith({}, currentQuery, newQueryParams, customizer)
 	
 	if (options.removeFields) {
 		const allKeys = keys(newQuery)

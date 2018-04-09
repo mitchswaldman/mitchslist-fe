@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import qs from 'qs'
+import './CategoryListDisplay.css'
 
 const CategoryListDisplay = ({ categories }) => {
 	
@@ -14,12 +15,12 @@ const CategoryListDisplay = ({ categories }) => {
 		))
 	}
 
-	const renderCategoryBlock = ({name, short_name, children}) => {
+	const renderCategoryBlock = ({name, short_name, children}, index) => {
 		return (
-			<div key={short_name} className="category-block">
-				<h1 className="category-header">
+			<div key={short_name} className='category-block'>
+				<h4 className="ban">
 					<Link to={`/search?${qs.stringify({cat: short_name})}`}>{name}</Link> 
-				</h1>
+				</h4>
 				<ul> 
 					{renderCategoryList(children)}
 				</ul>
@@ -28,7 +29,7 @@ const CategoryListDisplay = ({ categories }) => {
 	}
 	return (
 		<div className="categories-container">
-			{categories.map(category => renderCategoryBlock(category))}
+			{categories.map((category, index) => renderCategoryBlock(category, index))}
 		</div>
 	)
 }

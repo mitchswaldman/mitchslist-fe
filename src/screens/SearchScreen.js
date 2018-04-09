@@ -9,17 +9,23 @@ import PostList from '../components/PostList'
 import Header from '../components/Header'
 import Paginator from '../components/Paginator'
 import qs from 'qs'
+import './SearchScreen.css'
 
 class SearchScreen extends React.Component {
+	state = { showSidebar: true }
 	checkForCategory = (location, history) => {
 		const { search } = location
 		const query = qs.parse(search, {ignoreQueryPrefix: true}) || {}
 		if (!query.cat || String(query.cat).length !== 3) {
-			history.push(`/search?${qs.stringify({...query, cat: 'sss'})}`)
+			history.replace(`/search?${qs.stringify({...query, cat: 'sss'})}`)
 		}
 		return query
 	}
 	
+	handleClick = () => {
+		this.setState({showSidebar: !this.state.showSidebar})
+	}
+
 	componentDidMount() {
 		const { location, history, search } = this.props
 		const query = this.checkForCategory(location, history)
@@ -36,17 +42,25 @@ class SearchScreen extends React.Component {
 
 	render() {
 		const { searchResults = {}, location: { search } } = this.props
+		const { showSidebar } = this.state
 		const { posts = [], category_counts = {}, next, previous, total = 0 } = searchResults
 		const query = qs.parse(search, { ignoreQueryPrefix: true }) || {}
 		return (
-			<React.Fragment>
+			<div id="search-screen-wrapper">
 				<Header/>
-				<div> Search Screen </div>
-				<SearchBoxContainer/>
-				<Paginator total={total} count={posts.length} next={next} previous={previous} offset={Number(query.offset) || 0}/>
-				<PostList posts={posts}/>
-				<SearchSidebarContainer categoryCounts={category_counts} categoryId={query.cat || 'sss'}/>
-			</React.Fragment>
+				<div id="search-content" className={`${showSidebar ? '' : 'collapsed'}`}>
+					<div className="querybox">
+						<SearchBoxContainer onClick={this.handleClick} collapsed={!showSidebar}/>
+					</div>
+					<div className="search-legend">
+						<Paginator total={total} count={posts.length} next={next} previous={previous} offset={Number(query.offset) || 0}/>
+					</div>
+					<PostList posts={posts} categoryId={query.cat}/>
+				</div>
+				<div id="search-sidebar" className={`search-options-container ${showSidebar ? '' : 'collapsed'}`}>
+					<SearchSidebarContainer categoryCounts={category_counts} categoryId={query.cat || 'sss'}/>
+				</div>
+			</div>
 		)
 	}
 }

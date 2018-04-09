@@ -1,0 +1,12 @@
+#standalone-search-form ul {
+	background-color: white;
+}
+
+#standalone-search-form ul a {
+	font-size: 1.3em;
+}
+
+#standalone-search-form input {
+	width: 90%;
+	font-size: 1.3em;
+}

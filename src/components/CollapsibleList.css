@@ -1,0 +1,22 @@
+#rightbar h5.hot {
+	cursor: pointer;
+}
+
+#rightbar h5.active {
+	background: white;
+}
+
+.acitem {
+	max-height: 500px;
+    transition: max-height 0.25s ease-in;
+}
+
+.acitem.collapsed {
+	max-height: 0;
+    transition: max-height 0.25s ease-out;
+    overflow: hidden;
+}
+#rightbar h5 {
+	background: transparent;
+	color: #00E;
+}

@@ -1,0 +1,24 @@
+.result-row .attribute {
+	display: none;
+	-webkit-border-radius: .25em;
+    -moz-border-radius: .25em;
+    border-radius: .25em;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    font-family: "Arial",sans-serif;
+    padding: 1px 3px;
+}
+
+.result-row .result-date {
+	color: gray;
+    font-size: 11px;
+	margin-right: 2px;
+}
+
+.result-row .attribute.price {
+	display: inline-block;
+}
+
+.result-row .attribute.price:before {
+	content: "$";
+}

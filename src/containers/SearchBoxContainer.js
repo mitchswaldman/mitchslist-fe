@@ -20,11 +20,12 @@ class SearchBoxContainer extends React.Component {
 	}
 
 	render() {
-		const { dirty, categoryFormDirty, handleSubmit} = this.props 
+		const { dirty, categoryFormDirty, handleSubmit, onClick, collapsed} = this.props 
 		return (
-			<form onSubmit={handleSubmit}>
-				<Field name="text" component="input" type="text"/>
-				<button type="submit" className={`search-btn ${(dirty || categoryFormDirty) ? 'dirty' : ''}`}>Search</button>
+			<form onSubmit={handleSubmit} id="search-query-form">
+				<button className="form-tab" onClick={onClick}>{collapsed ? '>>' : '<<'}</button>
+				<Field name="text" component="input" type="text" placeholder="search mitchslist"  className="query"/>
+				<button type="submit" className={`searchbtn ${(dirty || categoryFormDirty) ? 'dirty' : ''}`}>Search</button>
 			</form>
 		)
 	}

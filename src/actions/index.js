@@ -17,7 +17,7 @@ export const SEARCH_REQUEST = 'SEARCH_REQUEST'
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS'
 export const SEARCH_FAILURE = 'SEARCH_FAILURE'
 export const search = (query) => {
-	const queryString = qs.stringify(query)
+	const queryString = qs.stringify(query, { indices: false })
 	const meta = {query}
 	return {
 		[RSAA]: {

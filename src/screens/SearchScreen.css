@@ -1,0 +1,120 @@
+#search-content {
+	margin-left: 230px;
+	transition: margin 0.25s ease-in;
+}
+
+#search-content.collapsed {
+	margin-left: 20px;
+}
+
+.search-options-container {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    float: left;
+    margin-left: 10px;
+    position: relative;
+    top: 2px;
+    z-index: 1003;
+    transition: margin 0.25s ease-in;
+}
+
+.search-options-container.collapsed {
+	margin-left: -200px;
+}
+
+@media only screen and (min-width: 480px){
+	.search-options-container {
+		    -webkit-transition: margin-left 300ms;
+		    -moz-transition: margin-left 300ms;
+		    -ms-transition: margin-left 300ms;
+		    -o-transition: margin-left 300ms;
+		    transition: margin-left 300ms;
+		    background-color: #FFF;
+		    border-bottom: 0;
+		    float: left;
+		    font-size: .9em;
+		    margin-bottom: 1em;
+		    margin-left: 0;
+		    margin-top: -3em;
+		    padding: 0 .625em 1em .5em;
+		    position: static;
+		    width: 200px;
+		}
+}
+
+@media only screen and (min-width: 840px){
+	.search-options-container {
+	    height: 100%;
+	    left: 0;
+	    margin: 0;
+	    overflow-y: scroll;
+	    position: fixed;
+	    top: 3em;
+	    width: 190px;
+	}
+}
+
+.query {
+	/*-webkit-flex-grow: 1;
+    -moz-flex-grow: 1;
+    -ms-flex-grow: 1;
+    flex-grow: 1;*/
+    font-size: 1.1em;
+    height: 2em;
+    line-height: 1.45em;
+    min-width: 7em;
+    padding: 0 3px 0 8px;
+    width: 70%;
+    vertical-align: top;
+}
+
+.searchbtn {
+	webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    display: -moz-inline-stack;
+    display: inline-block;
+    background-color: #FFF;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    line-height: 0;
+    margin: 0 0 0 5px;
+    max-height: 3.4em;
+    padding: 10px 10px 9px;
+    vertical-align: top;
+}
+
+.querybox {
+    display: block;
+    margin-top: 15px;
+    padding: 0 .5em;
+    white-space: nowrap;
+}
+
+@media only screen and (min-width: 840px){
+.querybox {
+    background-color: #FFF;
+    width: 80%;
+}}
+
+.querybox #search-query-form {
+	position: relative;
+	margin-bottom: 0;
+}
+
+button.form-tab {
+	position: absolute;
+	left: -50px;
+	/*margin-right: 1%;*/
+	border: none;
+	padding: none;
+}
+
+.search-open,.search-closed {
+	display: none;
+}
+
+.search-open.show, .search-closed.show {
+	display: inline;
+}

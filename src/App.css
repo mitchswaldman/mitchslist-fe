@@ -1,3 +1,21 @@
+.app-wrapper {
+  margin: 0 auto;
+  width: 100%;
+}
+input:hover {
+  border-color: #999;
+}
+
+input.flatinput {
+  height: 30px;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  margin: 0;
+  padding: 2px;
+}
+
 .App {
   text-align: center;
 }
@@ -27,6 +45,25 @@
   to { transform: rotate(360deg); }
 }
 
-.dirty {
+button.dirty {
   background-color: yellow;
+}
+
+ul.postlks {
+  margin-top: 17px;
+  margin-bottom: 17px;
+}
+
+.postlks li {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.center {
+  text-align: center;
+}
+
+.linklike {
+  color: #00E;
+  cursor: pointer;
 }

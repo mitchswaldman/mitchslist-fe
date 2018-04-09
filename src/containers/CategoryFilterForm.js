@@ -2,20 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { reduxForm, Field, getFormValues, initialize } from 'redux-form'
+import { reduxForm, reset, Field, getFormValues, initialize } from 'redux-form'
 import { pushSearchQuery, convertObjectKeysToArrays, convertObjectArraysToKeys } from '../helpers'
 import { categoryFilterFormName } from '../constants'
+import CheckboxGroup from '../utils/CheckboxGroup'
 import merge from 'lodash/merge'
 import keys from 'lodash/keys'
 import pickBy from 'lodash/pickBy'
 import qs from 'qs'
+import './CategoryFilterForm.css'
 
 const renderRangeInput = (name, type) => (
-	<React.Fragment>
-		<label aria-label={name}>{name} </label>
-		<Field name={`min_${name.toLowerCase()}`} component='input' type={type} placeholder={`min ${name}`}/>
-		<Field name={`max_${name.toLowerCase()}`} component='input' type={type} placeholder={`max ${name}`}/>
-	</React.Fragment>
+	<div className="searchgroup">
+		<span aria-label={name} className='searchlabel'>{name} </span>
+		<Field name={`min_${name.toLowerCase()}`} component='input' type={type} placeholder={`min`} className="flatinput"/>
+		<Field name={`max_${name.toLowerCase()}`} component='input' type={type} placeholder={`max`} className="flatinput"/>
+	</div>
 )
 const renderAttribute = (attribute) => {
 	const {name, unit, input_widget, input_type, input_values } = attribute 
@@ -25,12 +27,7 @@ const renderAttribute = (attribute) => {
 		return (
 			<React.Fragment>
 				<label aria-label={name}> {name} </label>
-				{values.map((value, idx) => (
-					<React.Fragment key={value}>
-						<label> {value} </label>
-						<Field key={value} name={`${name.toLowerCase()}.${value}`} component='input' type='checkbox' />
-					</React.Fragment>
-				))}
+				<CheckboxGroup name={name} options={values.map(value => ({label: value, value}))}/>
 			</React.Fragment>
 		)
 	}
@@ -44,14 +41,18 @@ class CategoryFilterForm extends React.Component {
 	constructor(props) {
 		super(props)
 	}
+	reset = () => {
+		this.props.reset()
+		this.props.resetRemote('categoryFacetForm')
+	}
 
 	render() {
-		const { attributes = [], pristine, handleSubmit} = this.props
+		const { attributes = [], pristine, handleSubmit, history, location: { search }} = this.props
 		if (attributes.length === 0 ) {
 			return null
 		}
 		return (
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} className="category-filter-form">
 				{attributes.map(attribute => {
 					return (
 						<div key={attribute.name} className='attribute-filter-container'>
@@ -60,7 +61,10 @@ class CategoryFilterForm extends React.Component {
 					)
 				})}
 				<Field name="text" type="hidden" component="input"/>
-				<button type='submit' className={pristine ? 'pristine' : 'dirty'}> Search </button>
+				<div className="searchgroup resetsearch">
+					<a onClick={this.reset} className="reset">reset</a>
+					<button type='submit' className={`searchlink linklike ${pristine ? 'pristine' : 'dirty'}`}> Search </button>
+				</div>
 			</form>
 		)
 	}
@@ -73,7 +77,7 @@ CategoryFilterForm.propTypes = {
 const onSubmit = (values, dispatch, props) => {
 	const { initialValues, history, fields } = props 
 	let newQuery = pushSearchQuery(initialValues, values)
-	history.push(`/search?${qs.stringify(newQuery, { encode: false })}`)
+	history.push(`/search?${qs.stringify(newQuery, {indices: false})}`)
 }
 
 const mapStateToProps = (state, { location: { search }}) => {
@@ -85,9 +89,9 @@ const mapStateToProps = (state, { location: { search }}) => {
 }
 
 const mapDispatchtoProps = (dispatch) => ({
-	initialize: (form, data) => dispatch(initialize(form, data))
+	resetRemote: (form) => dispatch(reset(form))
 })
-export default withRouter(connect(mapStateToProps)(reduxForm({
+export default withRouter(connect(mapStateToProps, mapDispatchtoProps)(reduxForm({
 	form: categoryFilterFormName,
 	enableReinitialize: true,
 	onSubmit

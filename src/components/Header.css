@@ -1,0 +1,54 @@
+.global-header {
+    border-bottom: 1px #ccc solid;
+    background: #eee;
+    line-height: 1.925em;
+    height: 2em;
+    padding: .3125em 0;
+    width: 100%;
+    z-index: 1003;
+}
+
+.header-logo {
+    -webkit-border-radius: 1em;
+    -moz-border-radius: 1em;
+    border-radius: 1em;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    float: left;
+    line-height: 1.2;
+    margin: 0 5px;
+    padding: .4em;
+    text-decoration: none;
+}
+
+.breadcrumbs-container {
+    float: left;
+    font-size: .9375em;
+    min-height: 1.3em;
+    position: relative;
+}
+
+.userlinks {
+    float: right;
+    font-size: .9em;
+    margin-top: 2px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+}
+
+.userlinks {
+    margin-right: 10%;
+}
+
+.userlinks .user {
+    float: left;
+    line-height: 1.4em;
+    padding-left: .4em;
+    padding-right: .4em;
+    text-align: center;
+}
+
+.userlinks .user.account {
+    border-left: 1px solid #999;
+}

@@ -1,0 +1,12 @@
+.category-facet-link {
+	padding: 0;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	display: inline;
+	padding-left: 0.5em;
+}
+
+.category-facet-form label,input {
+	margin: 0;
+}
+
