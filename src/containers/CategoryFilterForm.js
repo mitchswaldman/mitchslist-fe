@@ -19,20 +19,27 @@ const renderRangeInput = (name, type) => (
 		<Field name={`max_${name.toLowerCase()}`} component='input' type={type} placeholder={`max`} className="flatinput"/>
 	</div>
 )
+
+const renderMultipleValuesInput = (name, values) => (
+	<React.Fragment>
+		<label aria-label={name}> {name} </label>
+		<CheckboxGroup name={name} options={values.map(value => ({label: value, value}))}/>
+	</React.Fragment>
+)
+
 const renderAttribute = (attribute) => {
 	const {name, unit, input_widget, input_type, input_values } = attribute 
 	
 	if (input_widget === 'select') {
 		const values = input_values && input_values.values || []
-		return (
-			<React.Fragment>
-				<label aria-label={name}> {name} </label>
-				<CheckboxGroup name={name} options={values.map(value => ({label: value, value}))}/>
-			</React.Fragment>
-		)
+		return renderMultipleValuesInput(name, values)
 	}
 
 	if (input_widget === 'input') {
+		if (input_type === 'checkbox') {
+			const values = input_values && input_values.values || []
+			return renderMultipleValuesInput(name, values)
+		}
 		return renderRangeInput(name, input_type)
 	}
 }
