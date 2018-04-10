@@ -79,3 +79,7 @@ img {
     max-width: 100%;
     height: auto;
 }
+
+label.checkbox-label {
+  font-weight: 400;
+}

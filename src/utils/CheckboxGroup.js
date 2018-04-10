@@ -32,7 +32,7 @@ export default class CheckboxGroup extends Component {
       };
       const checked = inputValue.includes(value);
       return (
-        <label key={`checkbox-${index}`}>
+        <label key={`checkbox-${index}`} className="checkbox-label">
           <input type="checkbox" name={`${name}[${index}]`} value={value} checked={invert ? !checked : checked} onChange={handleChange} />
           <span>{typeof label === 'function' ? label() : label}</span>
         </label>

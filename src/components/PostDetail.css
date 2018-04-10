@@ -23,6 +23,7 @@
 .post-body {
 	font-family: "Bitstream Vera Serif","Times New Roman",serif;
 	font-size: 1.3em;
+    white-space: pre-wrap;
 }
 
 .iw {
