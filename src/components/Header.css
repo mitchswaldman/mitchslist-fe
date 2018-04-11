@@ -41,8 +41,14 @@
     margin-right: 10%;
 }
 
-.userlinks .user {
-    float: left;
+.
+ul.user-actions {
+    text-align: center;
+}
+
+.userlinks .user-actions li {
+    /*float: left;*/
+    display: inline-block;
     line-height: 1.4em;
     padding-left: .4em;
     padding-right: .4em;
@@ -51,4 +57,8 @@
 
 .userlinks .user.account {
     border-left: 1px solid #999;
+}
+
+li .favorites {
+    color: orange;
 }

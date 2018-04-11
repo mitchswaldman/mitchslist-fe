@@ -14,7 +14,8 @@ const preloadedState = loadState()
 let store = configureStore(preloadedState)
 store.subscribe(throttle(() => {
 	saveState({
-		"access": store.getState().access
+		"access": store.getState().access,
+		"favorites": store.getState().favorites
 	})
 }))
 

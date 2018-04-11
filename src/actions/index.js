@@ -108,3 +108,19 @@ export const getPost = (postId) => ({
 		}
 	}
 })
+
+export const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE'
+export const toggleFavorite = (postId) => ({
+	type: TOGGLE_FAVORITE,
+	payload: {
+		postId
+	}
+})
+
+export const TOGGLE_FORBIDDEN = 'TOGGLE_FORBIDDEN'
+export const toggleForbidden = (postId) => ({
+	type: TOGGLE_FORBIDDEN,
+	payload: {
+		postId
+	}
+})

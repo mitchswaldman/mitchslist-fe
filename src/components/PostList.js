@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import ToggleFavoriteButton from '../utils/ToggleFavoriteButton'
 import moment from 'moment'
 import './PostList.css'
 
@@ -12,13 +13,14 @@ export default class PostList extends React.Component {
 	}
 
 	render() {
-		const { posts, categoryId} = this.props
+		const { posts, categoryId, favorites, handleFavoriteClick} = this.props
 
 		return (
 			<ul className="row">
 				{posts.map(post => (
 					<li key={post.id} className="result-row">
 						<p className="result-info">
+							<ToggleFavoriteButton postId={post.id}/>
 							<time className="result-date">{moment(post.create_date).format('MMM D')}</time>
 							<Link to={`/post/${post.id}`} className="result-title">{post.title}</Link>
 							{post.attributes.map(attribute => {

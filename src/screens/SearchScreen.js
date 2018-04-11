@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { search } from '../actions'
+import { search, toggleFavorite } from '../actions'
 import { getSearchResultsForQuery } from '../reducers'
 import SearchBoxContainer from '../containers/SearchBoxContainer'
 import SearchSidebarContainer from '../containers/SearchSidebarContainer'
@@ -42,7 +42,7 @@ class SearchScreen extends React.Component {
 	}
 
 	render() {
-		const { searchResults = {}, location: { search } } = this.props
+		const { searchResults = {}, location: { search }, favorites, toggleFavorite } = this.props
 		const { showSidebar } = this.state
 		const { posts = [], category_counts = {}, next, previous, total = 0 } = searchResults
 		const query = qs.parse(search, { ignoreQueryPrefix: true }) || {}
@@ -60,7 +60,7 @@ class SearchScreen extends React.Component {
 					<div className="search-legend">
 						<Paginator total={total} count={posts.length} next={next} previous={previous} offset={Number(query.offset) || 0}/>
 					</div>
-					<PostList posts={posts} categoryId={query.cat}/>
+					<PostList posts={posts} handleFavoriteClick={toggleFavorite} categoryId={query.cat} favorites={favorites}/>
 				</div>
 				<div id="search-sidebar" className={`search-options-container ${showSidebar ? '' : 'collapsed'}`}>
 					<SearchSidebarContainer categoryCounts={category_counts} categoryId={query.cat || 'sss'}/>
@@ -73,12 +73,14 @@ class SearchScreen extends React.Component {
 const mapStateToProps = (state, { location: { search }}) => {
 	const query = qs.parse(search, { ignoreQueryPrefix: true })
 	return {
-		searchResults: getSearchResultsForQuery(state, query)
+		searchResults: getSearchResultsForQuery(state, query),
+		favorites: state.favorites
 	}
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	search: (query) => dispatch(search(query))
+	search: (query) => dispatch(search(query)),
+	toggleFavorite: (postId) => dispatch(toggleFavorite(postId))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchScreen))

@@ -83,3 +83,11 @@ img {
 label.checkbox-label {
   font-weight: 400;
 }
+
+a.favorite-button.favorited {
+  color: orange;
+}
+
+a.favorite-button.unfavorited {
+  color: grey;
+}

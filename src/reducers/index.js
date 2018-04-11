@@ -69,6 +69,21 @@ const ui = (state={currentSearch: undefined}, action) => {
 	return state
 }
 
+const createOnOffAttributes = (actionType) => (state ={}, action) => {
+	switch (action.type) {
+		case actionType:
+			const { payload: { postId }} = action 
+			if (state.hasOwnProperty(postId)) {
+				let newState = merge({}, state)
+				delete newState[postId]
+				return newState
+			}
+			return merge({}, state, {[postId]: true})
+		default:
+			return state
+	}
+}
+
 const pagination = combineReducers({
 	search: paginate({
 		mapActionToKey: action => {
@@ -88,5 +103,7 @@ export default combineReducers({
 	entities,
 	pagination,
 	ui,
+	favorites: createOnOffAttributes(ActionTypes.TOGGLE_FAVORITE),
+	forbidden: createOnOffAttributes(ActionTypes.TOGGLE_FORBIDDEN),
 	form: formReducer
 })

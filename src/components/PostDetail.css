@@ -20,6 +20,31 @@
     clear: left;
 }
 
+.posting-title .attribute {
+    display: none;
+}
+
+.post-attributes .attr-group {
+    -webkit-border-radius: .25em;
+    -moz-border-radius: .25em;
+    border-radius: .25em;
+    display: -moz-inline-stack;
+    display: inline-block;
+    background-color: #fafafa;
+    border: 1px solid #ccc;
+    font-size: 1.2em;
+    margin-bottom: .4em;
+    margin-right: .4em;
+    padding: .15em .4em;
+}
+
+.post-attributes .attr-group .key {
+    font-weight: 600;
+}
+
+.post-attributes .attr-group.price .value:before {
+    content: "$";
+}
 .post-body {
 	font-family: "Bitstream Vera Serif","Times New Roman",serif;
 	font-size: 1.3em;
