@@ -6,6 +6,7 @@ import PostDetailScreen from './screens/PostDetailScreen'
 import AboutScreen from './screens/AboutScreen'
 import Screen404 from './screens/Screen404'
 import LoginScreen from './screens/LoginScreen'
+import FavoritesScreen from './screens/FavoritesScreen'
 import logo from './logo.svg';
 import './App.css';
 
@@ -18,6 +19,7 @@ class App extends Component {
           <Route path="/search" component={SearchScreen}/>
           <Route path="/about" component={AboutScreen}/>
           <Route path="/login" component={LoginScreen}/>
+          <Route path="/favorites" component={FavoritesScreen}/>
           <Route exact path="/" component={HomeScreen}/>
           <Route path="/" component={Screen404}/>
         </Switch>
