@@ -13,7 +13,7 @@ export default class ImageGallery extends React.Component {
 		return (
 			<React.Fragment>
 			{photos && photos.length > 0 &&
-				<figure className="iw multiimage">
+				<div className="iw multiimage">
 					<div className="gallery">
 						<div className="swipe">
 							<div className="swipe-wrap">
@@ -32,7 +32,7 @@ export default class ImageGallery extends React.Component {
 							)
 						})}
 					</div>
-				</figure>}
+				</div>}
 				</React.Fragment>
 		)
 	}
