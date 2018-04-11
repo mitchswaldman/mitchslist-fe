@@ -16,7 +16,7 @@ export default class CheckboxGroup extends Component {
 
     const {name, onChange} = input;
     const {touched, error} = meta;
-    const inputValue = input.value;
+    const inputValue = Array.isArray(input.value) ? input.value : (input.value ? [input.value] : input.value);
 
     const checkboxes = options.map(({label, value}, index) => {
 
